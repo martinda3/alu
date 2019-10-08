@@ -11,7 +11,7 @@ ENTITY OPMUX is
 	   SLLL   :  OUT STD_LOGIC := 'U';
 	   SLR    :  OUT STD_LOGIC := 'U';
 	   ANDD   :  OUT STD_LOGIC := 'U';
-	   ORR    :  OUT STD_LOGIC := 'U';
+	   ORR    :  OUT STD_LOGIC := 'U'
 		);
 
 END OPMUX;
