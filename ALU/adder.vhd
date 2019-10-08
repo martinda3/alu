@@ -1,34 +1,34 @@
-library IEEE;
-use IEEE.std_logic_1164.all;
+LIBRARY IEEE;
+USE IEEE.STD_LOGIC_1164.ALL;
 
-ENTITY ADDER is
-  PORT(A     :  IN  std_logic_vector(31 downto 0) := "00000000000000000000000000000001";
-	   B     :  IN  std_logic_vector(31 downto 0) := "00000000000000000000000000000001";
-       OP	 :  IN  std_logic := '0';
-       ADD :  IN  std_logic := '0';
-       SUB :  IN  std_logic := '0';
-       COUT  : OUT  std_logic := '0';
-	   SUM   : OUT  std_logic_vector(31 downto 0) := "00000000000000000000000000000000"
+ENTITY ADDER IS
+  PORT(A     :  IN  STD_LOGIC_VECTOR(31 DOWNTO 0) := "00000000000000000000000000000001";
+	   B     :  IN  STD_LOGIC_VECTOR(31 DOWNTO 0) := "00000000000000000000000000000001";
+       OP	 :  IN  STD_LOGIC := '0';
+       ADD   :  IN  STD_LOGIC := '0';
+       SUB   :  IN  STD_LOGIC := '0';
+       COUT  : OUT  STD_LOGIC := '0';
+	   SUM   : OUT  STD_LOGIC_VECTOR(31 DOWNTO 0) := "00000000000000000000000000000000"
        );
 END ADDER;
 
-ARCHITECTURE behavior OF ADDER IS
+ARCHITECTURE BEHAVIOR OF ADDER IS
 	
-  SIGNAL CARRY : std_logic_vector(31 downto 0) := "00000000000000000000000000000000";
+  SIGNAL CARRY : STD_LOGIC_VECTOR(31 DOWNTO 0) := "00000000000000000000000000000000";
   BEGIN
 
     PROCESS(OP)
 	  BEGIN
 		SUM(0) <= A(0) XOR B(0) XOR SUB;
 		CARRY(0) <= (A(0) AND OP) OR (B(0) AND OP) OR (A(0) AND B(0));
-		FOR i IN 1 TO 31 LOOP
-		  SUM(i) <= A(i) XOR B(i) XOR CARRY(i-1);
-		  CARRY(i) <= (A(i) AND CARRY(i-1)) OR (B(i) AND CARRY(i-1)) OR (A(i) AND B(i));
+		FOR I IN 1 TO 31 LOOP
+		  SUM(I) <= A(I) XOR B(I) XOR CARRY(I-1);
+		  CARRY(I) <= (A(I) AND CARRY(I-1)) OR (B(I) AND CARRY(I-1)) OR (A(I) AND B(I));
 		END LOOP;
 		COUT <= CARRY(31);
 	END PROCESS;
 	 
-END behavior;
+END BEHAVIOR;
 
 
 

@@ -1,16 +1,16 @@
-LIBRARY ieee; 
-USE ieee.std_logic_1164.all;
+LIBRARY IEEE; 
+USE IEEE.STD_LOGIC_1164.ALL;
  
-ENTITY adder_tb_arch IS 
-END adder_tb_arch; 
+ENTITY ADDER_TB_ARCH IS 
+END ADDER_TB_ARCH; 
  
-ARCHITECTURE adder_tb_arch OF adder_tb IS 
+ARCHITECTURE ADDER_TB_ARCH OF ADDER_TB IS 
   
   TYPE EN_ARRAY  IS ARRAY (1 TO 10) OF STD_LOGIC;
   TYPE REG_ARRAY IS ARRAY (1 TO 10) OF STD_LOGIC_VECTOR(2  DOWNTO 0);
   TYPE DATAARRAY IS ARRAY (1 TO 10) OF STD_LOGIC_VECTOR(31 DOWNTO 0);
   
-  CONSTANT DELAY    :  time := 10 ns;
+  CONSTANT DELAY    :  TIME := 10 NS;
   
   CONSTANT OP_IN    :  EN_ARRAY  := ('0',     '1',   '0',   '1',   '0',   '1',   '0',   '0',   '0',   '0');
   
@@ -29,58 +29,58 @@ ARCHITECTURE adder_tb_arch OF adder_tb IS
   
   SIGNAL OP    :  STD_LOGIC := '0';
   SIGNAL COUT   :  STD_LOGIC := '0';
-  SIGNAL SUM  :  std_logic_vector (31 downto 0) := "00000000000000000000000000000000"; 
-  SIGNAL A  :  std_logic_vector (31 downto 0) := "00000000000000000000000000000000"; 
-  SIGNAL B  :  std_logic_vector (31 downto 0) := "00000000000000000000000000000000"; 
+  SIGNAL SUM  :  STD_LOGIC_VECTOR (31 DOWNTO 0) := "00000000000000000000000000000000"; 
+  SIGNAL A  :  STD_LOGIC_VECTOR (31 DOWNTO 0) := "00000000000000000000000000000000"; 
+  SIGNAL B  :  STD_LOGIC_VECTOR (31 DOWNTO 0) := "00000000000000000000000000000000"; 
     
-  COMPONENT Register_File  
+  COMPONENT REGISTER_FILE  
     PORT ( 
-      OP   :  in STD_LOGIC ; 
-      COUT  :  in STD_LOGIC ; 
-      SUM :  in std_logic_vector (31 downto 0); 
-      A : out std_logic_vector (31 downto 0);
-      B : out std_logic_vector (31 downto 0));  
+      OP   :  IN STD_LOGIC ; 
+      COUT  :  IN STD_LOGIC ; 
+      SUM :  IN STD_LOGIC_VECTOR (31 DOWNTO 0); 
+      A : OUT STD_LOGIC_VECTOR (31 DOWNTO 0);
+      B : OUT STD_LOGIC_VECTOR (31 DOWNTO 0));  
   END COMPONENT; 
   
 BEGIN   
  
   TEST : PROCESS
-    variable i : integer := 1;
+    VARIABLE I : INTEGER := 1;
     BEGIN
-      FOR i IN 1 TO 10 LOOP
-        OP   <= OP_IN(i);
-        B <= B_IN(i);
-        A <= A_IN(i);
-        wait for DELAY;
-      end loop;
-      wait;
-    end process TEST;
+      FOR I IN 1 TO 10 LOOP
+        OP   <= OP_IN(I);
+        B <= B_IN(I);
+        A <= A_IN(I);
+        WAIT FOR DELAY;
+      END LOOP;
+      WAIT;
+    END PROCESS TEST;
  
 --  CHECK : PROCESS
---    variable i : integer := 1;
+--    VARIABLE I : INTEGER := 1;
 --    BEGIN
---      FOR i IN 1 TO 10 LOOP
---        RegRead   <= RR_IN(i);
---        RegWrite  <= Rw_IN(i);
---        RegS      <= RS_IN(i);
---        RegT      <= RT_IN(i);
---        RegD      <= RD_IN(i);
---        WriteData <= WR_IN(i);
---        wait for DELAY/2;
---      end loop;
---      wait;
---    end process CHECK;
+--      FOR I IN 1 TO 10 LOOP
+--        REGREAD   <= RR_IN(I);
+--        REGWRITE  <= RW_IN(I);
+--        REGS      <= RS_IN(I);
+--        REGT      <= RT_IN(I);
+--        REGD      <= RD_IN(I);
+--        WRITEDATA <= WR_IN(I);
+--        WAIT FOR DELAY/2;
+--      END LOOP;
+--      WAIT;
+--    END PROCESS CHECK;
 
-  DUT  : Register_File  
+  DUT  : REGISTER_FILE  
     PORT MAP ( 
-      RegRead   => RegRead,
-      RegWrite  => RegWrite,
-      RegS      => RegS,
-      RegT      => RegT,
-      RegD      => RegD,
-      WriteData => WriteData,
-      ReadData1 => ReadData1,
-      ReadData2 => ReadData2) ; 
+      REGREAD   => REGREAD,
+      REGWRITE  => REGWRITE,
+      REGS      => REGS,
+      REGT      => REGT,
+      REGD      => REGD,
+      WRITEDATA => WRITEDATA,
+      READDATA1 => READDATA1,
+      READDATA2 => READDATA2) ; 
       
-END adder_tb_arch; 
+END ADDER_TB_ARCH; 
 

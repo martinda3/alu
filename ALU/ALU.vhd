@@ -1,53 +1,53 @@
-library IEEE;
-use IEEE.std_logic_1164.all;
+LIBRARY IEEE;
+USE IEEE.STD_LOGIC_1164.ALL;
 
-ENTITY ALU is
-  PORT(Z            : OUT  std_logic := '0';
-       O            : OUT  std_logic := '0';
-       C            : OUT  std_logic := '0';
-       EN           :  IN  std_logic := '0';
-       ALUctr       :  IN  STD_LOGIC_VECTOR(2  DOWNTO 0) := "000";
-       Result_ALU   : OUT  STD_LOGIC_VECTOR(31 DOWNTO 0) := "00000000000000000000000000000000";
-       ReadData1_ALU:  IN  STD_LOGIC_VECTOR(31 DOWNTO 0) := "00000000000000000000000000000000";
-       ReadData2_ALU:  IN  STD_LOGIC_VECTOR(31 DOWNTO 0) := "00000000000000000000000000000000"
+ENTITY ALU IS
+  PORT(Z            : OUT  STD_LOGIC := '0';
+       O            : OUT  STD_LOGIC := '0';
+       C            : OUT  STD_LOGIC := '0';
+       EN           :  IN  STD_LOGIC := '0';
+       ALUCTR       :  IN  STD_LOGIC_VECTOR(2  DOWNTO 0) := "000";
+       RESULT_ALU   : OUT  STD_LOGIC_VECTOR(31 DOWNTO 0) := "00000000000000000000000000000000";
+       READDATA1_ALU:  IN  STD_LOGIC_VECTOR(31 DOWNTO 0) := "00000000000000000000000000000000";
+       READDATA2_ALU:  IN  STD_LOGIC_VECTOR(31 DOWNTO 0) := "00000000000000000000000000000000"
        );
 END ALU;
 
-ARCHITECTURE behavior OF ALU IS
+ARCHITECTURE BEHAVIOR OF ALU IS
   
-  signal DATA1 : STD_LOGIC_VECTOR(31 DOWNTO 0):= "00000000000000000000000000000000";
-  signal DATA2 : STD_LOGIC_VECTOR(31 DOWNTO 0):= "00000000000000000000000000000000";
+  SIGNAL DATA1 : STD_LOGIC_VECTOR(31 DOWNTO 0):= "00000000000000000000000000000000";
+  SIGNAL DATA2 : STD_LOGIC_VECTOR(31 DOWNTO 0):= "00000000000000000000000000000000";
   
   BEGIN
 
     PROCESS(EN)
       BEGIN
-        if (EN = '1') Then
-          case ALUctr is
-            when "000" => -- ADDER
-              ReadData1 <= R0;
-            when "001" => -- SUBBTRACTER
-              ReadData1 <= R1;
-            when "010" => -- AND
-              ReadData1 <= R2;
-            when "011" => -- OR
-              ReadData1 <= R3;
-            when "100" => -- LOGIC SHIFT LEFT
-              ReadData1 <= R4;
-            when "101" => -- LOGIC SHIFT RIGHT
-              ReadData1 <= R5;
-            when "110" => -- ARITHMETIC SHIFT LEFT
-              ReadData1 <= R6;
-            when "111" => -- ARITHMETIC SHIFT RIGHT
-              ReadData1 <= R7;
-            when others =>
-            end case;
-      else
+        IF (EN = '1') THEN
+          CASE ALUCTR IS
+            WHEN "000" => -- ADDER
+              READDATA1 <= R0;
+            WHEN "001" => -- SUBBTRACTER
+              READDATA1 <= R1;
+            WHEN "010" => -- AND
+              READDATA1 <= R2;
+            WHEN "011" => -- OR
+              READDATA1 <= R3;
+            WHEN "100" => -- LOGIC SHIFT LEFT
+              READDATA1 <= R4;
+            WHEN "101" => -- LOGIC SHIFT RIGHT
+              READDATA1 <= R5;
+            WHEN "110" => -- ARITHMETIC SHIFT LEFT
+              READDATA1 <= R6;
+            WHEN "111" => -- ARITHMETIC SHIFT RIGHT
+              READDATA1 <= R7;
+            WHEN OTHERS =>
+            END CASE;
+      ELSE
         
-      end if; 
+      END IF; 
     END PROCESS;
     
 	 
-END behavior;
+END BEHAVIOR;
 
 

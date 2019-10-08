@@ -1,0 +1,23 @@
+LIBRARY IEEE;
+USE IEEE.STD_LOGIC_1164.ALL;
+
+ENTITY ADD_SUB IS
+  PORT(A  :   IN  STD_LOGIC := '0';
+	     B  :   IN  STD_LOGIC := '0';
+       CI :   IN  STD_LOGIC := '0';
+       S  :  OUT  STD_LOGIC := '0';
+       CO :  OUT  STD_LOGIC := '0');
+END ADD_SUB;
+
+ARCHITECTURE BEHAVIOR OF ADD_SUB IS
+	
+  BEGIN
+    PROCESS(A, B, CI)
+	  BEGIN
+		S <= A XOR B XOR CI;
+		CO <= (A AND CI) OR (B AND CI) OR (A AND B);
+	END PROCESS;
+END BEHAVIOR;
+
+
+
