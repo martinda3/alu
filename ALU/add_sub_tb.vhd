@@ -32,7 +32,7 @@ BEGIN
   TEST : PROCESS
     variable i : integer := 1;
     BEGIN
-      FOR i IN 1 TO 10 LOOP
+      FOR i IN 1 TO 8 LOOP
         A  <= A_IN(i);
         B  <= B_IN(i);
         CI <= CI_IN(i);
