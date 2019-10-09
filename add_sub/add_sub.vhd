@@ -1,0 +1,32 @@
+LIBRARY IEEE;
+USE IEEE.STD_LOGIC_1164.ALL;
+
+ENTITY ADD_SUB IS
+  PORT(
+      A  :   IN  STD_LOGIC := 'U';
+      B  :   IN  STD_LOGIC := 'U';
+      CI :   IN  STD_LOGIC := 'U';
+      --
+      S  :  OUT  STD_LOGIC := 'U';
+      CO :  OUT  STD_LOGIC := 'U');
+END ADD_SUB;
+
+ARCHITECTURE BEHAVIOR OF ADD_SUB IS
+  
+	SIGNAL SIG1: STD_LOGIC := 'U'; 
+	SIGNAL SIG2: STD_LOGIC := 'U'; 
+	SIGNAL SIG3: STD_LOGIC := 'U'; 
+	
+  BEGIN
+	SIG1 <= CI XOR B;
+	SIG2 <= A;
+	SIG3 <= SIG1 XOR SIG2;
+	--
+  S    <= CI XOR SIG3;
+	CO   <= ((SIG1 AND SIG2) OR (SIG3 AND CI));
+	
+END BEHAVIOR;
+
+
+
+

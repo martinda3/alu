@@ -24,3 +24,4 @@ transcript*
 *.cf
 sc_dpiheader.h
 vsim.dbg
+*.xml
