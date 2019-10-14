@@ -4,7 +4,7 @@ USE IEEE.STD_LOGIC_1164.ALL;
 ENTITY ALU IS
     PORT (
 	--CLK    :  IN STD_LOGIC := '0';
-	ALUOP  :  IN STD_LOGIC_VECTOR(2 DOWNTO 0) := "101";
+	ALUOP  :  IN STD_LOGIC_VECTOR(2 DOWNTO 0) := "111";
 	DATA1  :  IN STD_LOGIC_VECTOR(31 DOWNTO 0) := "10000011100000000111000000000011";
 	DATA2  :  IN STD_LOGIC_VECTOR(31 DOWNTO 0) := "00000001100100000001100000000001";
 	RESULT : OUT STD_LOGIC_VECTOR(31 DOWNTO 0) := "00000000000000000000000000000000";
@@ -16,6 +16,9 @@ END ALU;
 ARCHITECTURE STRUCTURAL OF ALU IS
     SIGNAL BUFFand : STD_LOGIC_VECTOR(31 DOWNTO 0);
     SIGNAL BUFFrsl : STD_LOGIC_VECTOR(31 DOWNTO 0);
+    
+    
+    SIGNAL BUFFasr : STD_LOGIC_VECTOR(31 DOWNTO 0);
     SIGNAL BUFFlsl : STD_LOGIC_VECTOR(31 DOWNTO 0);
     SIGNAL BUFFor : STD_LOGIC_VECTOR(31 DOWNTO 0);
     SIGNAL BUFFADD : STD_LOGIC_VECTOR(31 DOWNTO 0);
@@ -24,8 +27,6 @@ ARCHITECTURE STRUCTURAL OF ALU IS
     SIGNAL CLK : STD_LOGIC := '0'; 
     SIGNAL CARRYA : STD_LOGIC := '0'; 
     SIGNAL CARRYS : STD_LOGIC := '0'; 
-    SIGNAL CARRYl : STD_LOGIC := '0';
-    SIGNAL OVERR : STD_LOGIC := '0';
     
 BEGIN
   D2_1COMP <= NOT DATA2;
@@ -33,13 +34,17 @@ BEGIN
   sleft : ENTITY WORK.GEN_sleft(Behavioral)
           Port MAP( 
             DATA1_IN => DATA1,
-            RESULT   => BUFFlsl,
-            C        => CARRYl);
+            RESULT   => BUFFlsl);
+            
+  artri : ENTITY WORK.GEN_aright(Behavioral)
+          Port MAP( 
+            DATA1_IN => DATA1,
+            RESULT   => BUFFasr);
+                     
   rleft : ENTITY WORK.GEN_rleft(Behavioral)
           Port MAP( 
             DATA1_IN => DATA1,
-            RESULT   => BUFFrsl,
-            V        => OVERR);
+            RESULT   => BUFFrsl);
   ander : ENTITY WORK.GEN_and(Behavioral)
           Port MAP( 
             DATA1_IN => DATA1,
@@ -95,16 +100,14 @@ PROCESS(CLK, ALUOP)
            RESULT <= BUFFand;
         WHEN "011" => -- and
            RESULT <= BUFFor;
-        WHEN "100" => -- and
+        WHEN "100" => -- lls
            RESULT <= BUFFlsl;
-        WHEN "101" => -- and
+        WHEN "101" => -- lrs
            RESULT <= BUFFRsl;
-        WHEN "110" => -- and
+        WHEN "110" => -- als
            RESULT <= BUFFlsl;
-           carry <= CARRYl;
-        WHEN "111" => -- and
-           RESULT <= BUFFRsl;
-           ZERO <= OVERR;
+        WHEN "111" => -- ars
+           RESULT <= BUFFasr;
         WHEN OTHERS => -- SHOULD NOT HAPPEN
       END CASE;
     END IF;
