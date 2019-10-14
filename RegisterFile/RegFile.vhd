@@ -3,7 +3,7 @@ use IEEE.std_logic_1164.all;
 USE ieee.numeric_std.ALL;
 
 ENTITY Register_File is
-  PORT(RegRead  : IN  std_logic := '0';
+  PORT(
        RegWrite : IN  std_logic := '0';
        RegS     : IN  STD_LOGIC_VECTOR(4  DOWNTO 0) := "00000";
        RegT     : IN  STD_LOGIC_VECTOR(4  DOWNTO 0) := "00000";
@@ -17,9 +17,9 @@ END Register_File;
 ARCHITECTURE behavior OF Register_File IS
 
 	signal R0 : STD_LOGIC_VECTOR(31 DOWNTO 0):= "00000000000000000000000000000000";
-	signal R1 : STD_LOGIC_VECTOR(31 DOWNTO 0):= "00000000000000000000000000000000";
-	signal R2 : STD_LOGIC_VECTOR(31 DOWNTO 0):= "00000000000000000000000000000000";
-	signal R3 : STD_LOGIC_VECTOR(31 DOWNTO 0):= "00000000000000000000000000000000";
+	signal R1 : STD_LOGIC_VECTOR(31 DOWNTO 0):= "00000000000000000000000000000001";
+	signal R2 : STD_LOGIC_VECTOR(31 DOWNTO 0):= "00000000000000000000000000000010";
+	signal R3 : STD_LOGIC_VECTOR(31 DOWNTO 0):= "00000000000000000000000000000011";
 	signal R4 : STD_LOGIC_VECTOR(31 DOWNTO 0):= "00000000000000000000000000000000";
 	signal R5 : STD_LOGIC_VECTOR(31 DOWNTO 0):= "00000000000000000000000000000000";
 	signal R6 : STD_LOGIC_VECTOR(31 DOWNTO 0):= "00000000000000000000000000000000";
@@ -51,14 +51,21 @@ ARCHITECTURE behavior OF Register_File IS
 	
 	signal R30 : STD_LOGIC_VECTOR(31 DOWNTO 0):= "00000000000000000000000000000000";
 	signal R31 : STD_LOGIC_VECTOR(31 DOWNTO 0):= "00000000000000000000000000000000";
-	
+	signal CLK : STD_LOGIC := '0';
 	
   
   BEGIN
+    CLOCK: PROCESS
+        BEGIN
+            WHILE 1 = 1 LOOP
+                CLK <= NOT CLK; 
+	        WAIT FOR 1 NS;
+            END LOOP;
+        END PROCESS CLOCK;
 
-    PROCESS(RegRead)
+    PROCESS(CLK)
       BEGIN
-        if (RegRead = '1') Then
+        if (CLK = '1') Then
           case to_integer(unsigned(RegS)) is
             when 0 => 
               ReadData1 <= R0;
@@ -131,9 +138,9 @@ ARCHITECTURE behavior OF Register_File IS
       end if; 
     END PROCESS;
     
-   PROCESS(RegRead)
+   PROCESS(CLK)
       BEGIN
-        if (RegRead = '1') Then
+        if (CLK = '1') Then
           case to_integer(unsigned(RegT)) is
             when 0 => 
               ReadData2 <= R0;
@@ -206,9 +213,9 @@ ARCHITECTURE behavior OF Register_File IS
       end if; 
     END PROCESS; 
 	 
-	 PROCESS(RegRead)
+	 PROCESS(CLK)
       BEGIN
-        if (RegWrite = '1') and (RegRead = '0') Then
+        if (RegWrite = '1') AND (CLK = '0') Then
           case to_integer(unsigned(RegD)) is
             when 0 => 
               R0 <= WriteData;

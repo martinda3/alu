@@ -19,21 +19,26 @@ ARCHITECTURE simple OF top_level IS
   
   signal DataA : std_logic_vector(31 downto 0);
   signal DataB : std_logic_vector(31 downto 0);
-  signal Write : std_logic_vector(31 downto 0);
+  signal Buff  : std_logic_vector(31 downto 0);
   begin
   reg : ENTITY work.Register_File(behavior)
   PORT map(
-       RegRead   => CLK,
        RegWrite  => RegWr,
        RegS      => Rs,
        RegT      => Rt,
        RegD      => Rd,
-       WriteData => Write,
+       WriteData => Buff,
        ReadData1 => DataA,
        ReadData2 => DataB);
   
-  
-
-  
-  
+  alu : ENTITY work.ALU(STRUCTURAL)
+  PORT map(
+       ALUOP  => ALUctr,
+	     DATA1  => DataA,
+	     DATA2  => DataB,
+	     RESULT => Buff,
+	     ZERO   => Zero,
+	     CARRY  => Carryout,
+	     OVER   => Overflow);
+	Result <= Buff;
 end simple;

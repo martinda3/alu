@@ -6,30 +6,34 @@ entity top_level_tb is
 end entity;
 
 architecture behavior of top_level_tb is
-  constant TIME_DELAY : time := 20 ns;
-  constant NUM_VALS : integer := 2;
+  constant TIME_DELAY : time := 10 ns;
+  constant NUM_VALS : integer := 6;
 
-  type RegWr_array is array(0 to (NUM_VALS - 1)) of std_logic;
-  type Rd_array is array(0 to (NUM_VALS - 1)) of std_logic_vector(4 downto 0);
-  type Rs_array is array(0 to (NUM_VALS - 1)) of std_logic_vector(4 downto 0);
-  type Rt_array is array(0 to (NUM_VALS - 1)) of std_logic_vector(4 downto 0);
-  type ALUctr_array is array(0 to (NUM_VALS - 1)) of std_logic_vector(2 downto 0);
-  type Zero_array is array(0 to (NUM_VALS - 1)) of std_logic;
+  type RegWr_array is array   (0 to (NUM_VALS - 1)) of std_logic;
+  type Rd_array is array      (0 to (NUM_VALS - 1)) of std_logic_vector(4 downto 0);
+  type Rs_array is array      (0 to (NUM_VALS - 1)) of std_logic_vector(4 downto 0);
+  type Rt_array is array      (0 to (NUM_VALS - 1)) of std_logic_vector(4 downto 0);
+  type ALUctr_array is array  (0 to (NUM_VALS - 1)) of std_logic_vector(2 downto 0);
+  type Zero_array is array    (0 to (NUM_VALS - 1)) of std_logic;
   type Overflow_array is array(0 to (NUM_VALS - 1)) of std_logic;
   type Carryout_array is array(0 to (NUM_VALS - 1)) of std_logic;
-  type Result_array is array(0 to (NUM_VALS - 1)) of std_logic_vector(31 downto 0);
+  type Result_array is array  (0 to (NUM_VALS - 1)) of std_logic_vector(31 downto 0);
 
   -- Expected input and output data.
-  constant RegWr_vals : RegWr_array := ('1','1');
-  constant Rd_vals : Rd_array := ("11110","11110");
-  constant Rs_vals : Rs_array := ("00000","00010");
-  constant Rt_vals : Rt_array := ("00001","00001");
-  constant ALUctr_vals : ALUctr_array := ("011","100");
-  constant Zero_vals : Zero_array := ('1','0');
-  constant Overflow_vals : Overflow_array := ('1','0');
-  constant Carryout_vals : Carryout_array := ('1','0');
-  constant Result_vals : Result_array := ("11111111111111111111111111111111",
-                                          "00000000000000000000000000000000");
+  constant RegWr_vals : RegWr_array := ('0','1','0','1','0','1');
+  constant Rd_vals : Rd_array := ("00011","00011","00011","00011","00011","00011");
+  constant Rs_vals : Rs_array := ("00001","00001","00001","00001","00001","00001");
+  constant Rt_vals : Rt_array := ("00010","00010","00010","00010","00010","00010");
+  constant ALUctr_vals : ALUctr_array := ("011", "011","000", "000","001", "001");
+  constant Zero_vals : Zero_array := ('0','0','0','0','0','0');
+  constant Overflow_vals : Overflow_array := ('0','0','0','0','0','0');
+  constant Carryout_vals : Carryout_array := ('0','0','0','0','0','0');
+  constant Result_vals : Result_array := ("00000000000000000000000000000011",
+                                          "00000000000000000000000000000011",
+                                          "00000000000000000000000000000011",
+                                          "00000000000000000000000000000011",
+                                          "11111111111111111111111111111111",
+                                          "11111111111111111111111111111111");
 
   signal clk_sig : std_logic := '0';
   signal RegWr_sig : std_logic;
