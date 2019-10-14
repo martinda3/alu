@@ -4,7 +4,7 @@ USE IEEE.STD_LOGIC_1164.ALL;
 ENTITY ALU IS
     PORT (
 	--CLK    :  IN STD_LOGIC := '0';
-	ALUOP  :  IN STD_LOGIC_VECTOR(2 DOWNTO 0) := "110";
+	ALUOP  :  IN STD_LOGIC_VECTOR(2 DOWNTO 0) := "101";
 	DATA1  :  IN STD_LOGIC_VECTOR(31 DOWNTO 0) := "10000011100000000111000000000011";
 	DATA2  :  IN STD_LOGIC_VECTOR(31 DOWNTO 0) := "00000001100100000001100000000001";
 	RESULT : OUT STD_LOGIC_VECTOR(31 DOWNTO 0) := "00000000000000000000000000000000";
@@ -15,6 +15,7 @@ END ALU;
 
 ARCHITECTURE STRUCTURAL OF ALU IS
     SIGNAL BUFFand : STD_LOGIC_VECTOR(31 DOWNTO 0);
+    SIGNAL BUFFrsl : STD_LOGIC_VECTOR(31 DOWNTO 0);
     SIGNAL BUFFlsl : STD_LOGIC_VECTOR(31 DOWNTO 0);
     SIGNAL BUFFor : STD_LOGIC_VECTOR(31 DOWNTO 0);
     SIGNAL BUFFADD : STD_LOGIC_VECTOR(31 DOWNTO 0);
@@ -24,6 +25,7 @@ ARCHITECTURE STRUCTURAL OF ALU IS
     SIGNAL CARRYA : STD_LOGIC := '0'; 
     SIGNAL CARRYS : STD_LOGIC := '0'; 
     SIGNAL CARRYl : STD_LOGIC := '0';
+    SIGNAL OVERR : STD_LOGIC := '0';
     
 BEGIN
   D2_1COMP <= NOT DATA2;
@@ -33,7 +35,11 @@ BEGIN
             DATA1_IN => DATA1,
             RESULT   => BUFFlsl,
             C        => CARRYl);
-            
+  rleft : ENTITY WORK.GEN_rleft(Behavioral)
+          Port MAP( 
+            DATA1_IN => DATA1,
+            RESULT   => BUFFrsl,
+            V        => OVERR);
   ander : ENTITY WORK.GEN_and(Behavioral)
           Port MAP( 
             DATA1_IN => DATA1,
@@ -91,9 +97,14 @@ PROCESS(CLK, ALUOP)
            RESULT <= BUFFor;
         WHEN "100" => -- and
            RESULT <= BUFFlsl;
+        WHEN "101" => -- and
+           RESULT <= BUFFRsl;
         WHEN "110" => -- and
            RESULT <= BUFFlsl;
            carry <= CARRYl;
+        WHEN "111" => -- and
+           RESULT <= BUFFRsl;
+           ZERO <= OVERR;
         WHEN OTHERS => -- SHOULD NOT HAPPEN
       END CASE;
     END IF;
