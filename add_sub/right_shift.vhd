@@ -10,7 +10,7 @@ end GEN_rleft;
 architecture Behavioral of GEN_rleft is
   signal holder : std_logic_vector(32 downto 0):= "000000000000000000000000000000000";
 begin      
- GEN : FOR N IN 32 DOWNTO 0 GENERATE
+ GEN : FOR N IN 32 DOWNTO 1 GENERATE
  OTHER : ENTITY WORK.sleft(BEHAVIOR)
  PORT MAP(A => DATA1_IN(N - 1), 
           S => holder(N));
