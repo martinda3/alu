@@ -1,0 +1,19 @@
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+
+entity GEN_and is
+    Port ( DATA1_IN :  in STD_LOGIC_VECTOR(31 DOWNTO 0) := "00000000000000000000000000000000";
+           DATA2_IN :  in STD_LOGIC_VECTOR(31 DOWNTO 0) := "00000000000000000000000000000000";
+           RESULT   : out STD_LOGIC_VECTOR(31 DOWNTO 0) := "00000000000000000000000000000000");-- OVERFLOW
+end GEN_and;
+
+architecture Behavioral of GEN_and is
+  
+begin      
+ GEN : FOR N IN 0 TO 31 GENERATE
+ OTHER : ENTITY WORK.bitand(BEHAVIOR)
+ PORT MAP(A => DATA1_IN(N), 
+          B => DATA2_IN(N), 
+          S => RESULT(N));
+ END GENERATE GEN;
+end Behavioral;

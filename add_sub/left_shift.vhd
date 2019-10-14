@@ -1,0 +1,14 @@
+LIBRARY IEEE;
+USE IEEE.STD_LOGIC_1164.ALL;
+
+ENTITY sleft IS
+  PORT(
+      A  :   IN  STD_LOGIC := 'U';
+      --
+      S  :  OUT  STD_LOGIC := 'U');
+END sleft;
+
+ARCHITECTURE BEHAVIOR OF sleft IS
+  BEGIN
+  S    <= A;
+END BEHAVIOR;

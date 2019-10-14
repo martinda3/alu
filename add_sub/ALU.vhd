@@ -4,9 +4,9 @@ USE IEEE.STD_LOGIC_1164.ALL;
 ENTITY ALU IS
     PORT (
 	--CLK    :  IN STD_LOGIC := '0';
-	ALUOP  :  IN STD_LOGIC_VECTOR(2 DOWNTO 0) := "001";
-	DATA1  :  IN STD_LOGIC_VECTOR(31 DOWNTO 0) := "00000000000000000000000000000011";
-	DATA2  :  IN STD_LOGIC_VECTOR(31 DOWNTO 0) := "00000000000000000000000000000001";
+	ALUOP  :  IN STD_LOGIC_VECTOR(2 DOWNTO 0) := "110";
+	DATA1  :  IN STD_LOGIC_VECTOR(31 DOWNTO 0) := "10000011100000000111000000000011";
+	DATA2  :  IN STD_LOGIC_VECTOR(31 DOWNTO 0) := "00000001100100000001100000000001";
 	RESULT : OUT STD_LOGIC_VECTOR(31 DOWNTO 0) := "00000000000000000000000000000000";
 	ZERO   : OUT STD_LOGIC := '0';
 	CARRY  : OUT STD_LOGIC := '0';
@@ -14,17 +14,38 @@ ENTITY ALU IS
 END ALU;
 
 ARCHITECTURE STRUCTURAL OF ALU IS
-    --SIGNAL CARRYOUT : STD_LOGIC_VECTOR(32 DOWNTO 0);
+    SIGNAL BUFFand : STD_LOGIC_VECTOR(31 DOWNTO 0);
+    SIGNAL BUFFlsl : STD_LOGIC_VECTOR(31 DOWNTO 0);
+    SIGNAL BUFFor : STD_LOGIC_VECTOR(31 DOWNTO 0);
     SIGNAL BUFFADD : STD_LOGIC_VECTOR(31 DOWNTO 0);
     SIGNAL BUFFSUB : STD_LOGIC_VECTOR(31 DOWNTO 0);
     SIGNAL D2_1COMP : STD_LOGIC_VECTOR(31 DOWNTO 0);
     SIGNAL CLK : STD_LOGIC := '0'; 
     SIGNAL CARRYA : STD_LOGIC := '0'; 
     SIGNAL CARRYS : STD_LOGIC := '0'; 
+    SIGNAL CARRYl : STD_LOGIC := '0';
     
 BEGIN
   D2_1COMP <= NOT DATA2;
   
+  sleft : ENTITY WORK.GEN_sleft(Behavioral)
+          Port MAP( 
+            DATA1_IN => DATA1,
+            RESULT   => BUFFlsl,
+            C        => CARRYl);
+            
+  ander : ENTITY WORK.GEN_and(Behavioral)
+          Port MAP( 
+            DATA1_IN => DATA1,
+            DATA2_IN => DATA2,
+            RESULT   => BUFFand);
+            
+  orrer : ENTITY WORK.GEN_or(Behavioral)
+          Port MAP( 
+            DATA1_IN => DATA1,
+            DATA2_IN => DATA2,
+            RESULT   => BUFFor);
+            
   ADDER : ENTITY WORK.GEN_ADD_SUB(Behavioral)
           Port MAP( 
             DATA1_IN => DATA1,
@@ -61,9 +82,18 @@ PROCESS(CLK, ALUOP)
         WHEN "000" => -- ADD
            RESULT <= BUFFADD;
            CARRY <= CARRYA;
-        WHEN "001" => -- ADD
+        WHEN "001" => -- sub
            RESULT <= BUFFSUB;
            CARRY <= CARRYS;
+        WHEN "010" => -- and
+           RESULT <= BUFFand;
+        WHEN "011" => -- and
+           RESULT <= BUFFor;
+        WHEN "100" => -- and
+           RESULT <= BUFFlsl;
+        WHEN "110" => -- and
+           RESULT <= BUFFlsl;
+           carry <= CARRYl;
         WHEN OTHERS => -- SHOULD NOT HAPPEN
       END CASE;
     END IF;
