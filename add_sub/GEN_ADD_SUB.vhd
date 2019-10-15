@@ -15,16 +15,15 @@ architecture Behavioral of GEN_ADD_SUB is
   
   SIGNAL CARRYOUT : STD_LOGIC_VECTOR(31 DOWNTO 0) := "00000000000000000000000000000000";
   SIGNAL BUFF     : STD_LOGIC_VECTOR(31 DOWNTO 0) := "00000000000000000000000000000000";
-  SIGNAL Z_FLAG   : STD_LOGIC := '0';
 begin
  
  LSB : ENTITY WORK.ADD_SUB(BEHAVIOR)
  PORT MAP(A => DATA1_IN(0), 
           B => DATA2_IN(0), 
-          S => RESULT(0),      
+          S => BUFF(0),      
           CI => OP, 
           CO => CARRYOUT(0));
-             
+ RESULT(0) <= BUFF(0);       
  GEN : FOR N IN 1 TO 30 GENERATE
  -- ADDER SUBTRACTOR
  OTHER : ENTITY WORK.ADD_SUB(BEHAVIOR)
@@ -40,8 +39,8 @@ begin
           B => DATA2_IN(31), 
           S => RESULT(31),      
           CI => CARRYOUT(30), 
-          CO => CARRYOUT(31));
-          
+          CO => CARRYOUT(31));          
 C <= CARRYOUT(31);  
 V <= CARRYOUT(30) XOR CARRYOUT(31);
+Z <= '1' when  BUFF = "00000000000000000000000000000000" else '0';
 end Behavioral;

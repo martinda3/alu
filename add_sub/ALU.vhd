@@ -23,8 +23,11 @@ ARCHITECTURE STRUCTURAL OF ALU IS
     SIGNAL D2_1COMP : STD_LOGIC_VECTOR(31 DOWNTO 0);
     SIGNAL CLK : STD_LOGIC := '0'; 
     SIGNAL CARRYA : STD_LOGIC := '0'; 
-    SIGNAL CARRYS : STD_LOGIC := '0'; 
-    
+    SIGNAL CARRYS : STD_LOGIC := '0';
+    SIGNAL ZEROA : STD_LOGIC := '0'; 
+    SIGNAL ZEROS : STD_LOGIC := '0';  
+    SIGNAL OVERS : STD_LOGIC := '0'; 
+    SIGNAL OVERA : STD_LOGIC := '0'; 
 BEGIN
   D2_1COMP <= NOT DATA2;
   
@@ -61,8 +64,8 @@ BEGIN
             RESULT   => BUFFADD,
             C        => CARRYA,
             OP       => '0',
-            Z        => ZERO,
-            V        => OVER);
+            Z        => ZEROA,
+            V        => OVERA);
             
   SUBBER : ENTITY WORK.GEN_ADD_SUB(Behavioral)
           Port MAP( 
@@ -71,8 +74,8 @@ BEGIN
             RESULT   => BUFFSUB,
             C        => CARRYS,
             OP       => '1',
-            Z        => ZERO,
-            V        => OVER);
+            Z        => ZEROS,
+            V        => OVERS);
             
     CLOCK: PROCESS
         BEGIN
@@ -89,10 +92,14 @@ PROCESS(CLK, ALUOP)
       CASE ALUOP is 
         WHEN "000" => -- ADD
            RESULT <= BUFFADD;
-           CARRY <= CARRYA;
+           CARRY  <= CARRYA;
+           ZERO   <= ZEROA;
+           OVER   <= OVERA;
         WHEN "001" => -- sub
            RESULT <= BUFFSUB;
-           CARRY <= CARRYS;
+           CARRY  <= CARRYS;
+           ZERO   <= ZEROS;
+           OVER   <= OVERS;
         WHEN "010" => -- and
            RESULT <= BUFFand;
         WHEN "011" => -- or

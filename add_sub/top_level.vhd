@@ -16,7 +16,7 @@ ENTITY top_level IS
 END top_level;
 
 ARCHITECTURE simple OF top_level IS
-  
+  constant hold : time := 4 ns;
   signal DataA : std_logic_vector(31 downto 0);
   signal DataB : std_logic_vector(31 downto 0);
   signal Buff  : std_logic_vector(31 downto 0);
@@ -40,5 +40,5 @@ ARCHITECTURE simple OF top_level IS
 	     ZERO   => Zero,
 	     CARRY  => Carryout,
 	     OVER   => Overflow);
-	Result <= Buff;
+	Result <= Buff when Buff'stable(hold);
 end simple;
