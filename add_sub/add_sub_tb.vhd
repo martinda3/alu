@@ -44,12 +44,7 @@ BEGIN
     end process TEST;
     
   DUT  : ADD_SUB  
-    PORT MAP ( 
-      CI  => CI,
-      A   => A,
-      CO  => CO,
-      B   => B,
-      S   => S) ; 
+  PORT MAP (CI => CI, A => A, CO => CO, B => B, S => S) ; 
       
 END ; 
 
