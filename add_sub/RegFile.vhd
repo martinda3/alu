@@ -26,7 +26,6 @@ ARCHITECTURE behavior OF Register_File IS
 	signal R7 : STD_LOGIC_VECTOR(31 DOWNTO 0):= "00000000000000000000000000000000";
 	signal R8 : STD_LOGIC_VECTOR(31 DOWNTO 0):= "00000000000000000000000000000000";
 	signal R9 : STD_LOGIC_VECTOR(31 DOWNTO 0):= "00000000000000000000000000000000";
-	
 	signal R10 : STD_LOGIC_VECTOR(31 DOWNTO 0):= "00000000000000000000000000000000";
 	signal R11 : STD_LOGIC_VECTOR(31 DOWNTO 0):= "00000000000000000000000000000000";
 	signal R12 : STD_LOGIC_VECTOR(31 DOWNTO 0):= "00000000000000000000000000000000";
@@ -37,7 +36,6 @@ ARCHITECTURE behavior OF Register_File IS
 	signal R17 : STD_LOGIC_VECTOR(31 DOWNTO 0):= "00000000000000000000000000000000";
 	signal R18 : STD_LOGIC_VECTOR(31 DOWNTO 0):= "00000000000000000000000000000000";
 	signal R19 : STD_LOGIC_VECTOR(31 DOWNTO 0):= "00000000000000000000000000000000";
-	
 	signal R20 : STD_LOGIC_VECTOR(31 DOWNTO 0):= "00000000000000000000000000000000";
 	signal R21 : STD_LOGIC_VECTOR(31 DOWNTO 0):= "00000000000000000000000000000000";
 	signal R22 : STD_LOGIC_VECTOR(31 DOWNTO 0):= "00000000000000000000000000000000";
@@ -48,13 +46,13 @@ ARCHITECTURE behavior OF Register_File IS
 	signal R27 : STD_LOGIC_VECTOR(31 DOWNTO 0):= "00000000000000000000000000000000";
 	signal R28 : STD_LOGIC_VECTOR(31 DOWNTO 0):= "00000000000000000000000000000000";
 	signal R29 : STD_LOGIC_VECTOR(31 DOWNTO 0):= "00000000000000000000000000000000";
-	
 	signal R30 : STD_LOGIC_VECTOR(31 DOWNTO 0):= "00000000000000000000000000000000";
 	signal R31 : STD_LOGIC_VECTOR(31 DOWNTO 0):= "00000000000000000000000000000000";
+	
 	signal CLK : STD_LOGIC := '0';
 	
-  
   BEGIN
+  
     CLOCK: PROCESS
         BEGIN
             WHILE 1 = 1 LOOP
@@ -83,7 +81,7 @@ ARCHITECTURE behavior OF Register_File IS
               ReadData1 <= R6;
             when 7 => 
               ReadData1 <= R7;
-			      when 8 => 
+			when 8 => 
               ReadData1 <= R8;
             when 9 => 
               ReadData1 <= R9;
@@ -103,11 +101,11 @@ ARCHITECTURE behavior OF Register_File IS
               ReadData1 <= R16;
             when 17 => 
               ReadData1 <= R17;
-			      when 18 => 
+			when 18 => 
               ReadData1 <= R18;
             when 19 => 
               ReadData1 <= R19;
-			      when 20 => 
+			when 20 => 
               ReadData1 <= R20;
             when 21 => 
               ReadData1 <= R21;
@@ -123,18 +121,17 @@ ARCHITECTURE behavior OF Register_File IS
               ReadData1 <= R26;
             when 27 => 
               ReadData1 <= R27;
-			      when 28 => 
+			when 28 => 
               ReadData1 <= R28;
             when 29 => 
               ReadData1 <= R29;
-			      when 30 => 
+			when 30 => 
               ReadData1 <= R30;
             when 31 => 
               ReadData1 <= R31;
             when others =>
             end case;
       else
-        
       end if; 
     END PROCESS;
     
@@ -158,7 +155,7 @@ ARCHITECTURE behavior OF Register_File IS
               ReadData2 <= R6;
             when 7 => 
               ReadData2 <= R7;
-			      when 8 => 
+			when 8 => 
               ReadData2 <= R8;
             when 9 => 
               ReadData2 <= R9;
@@ -178,11 +175,11 @@ ARCHITECTURE behavior OF Register_File IS
               ReadData2 <= R16;
             when 17 => 
               ReadData2 <= R17;
-			      when 18 => 
+			when 18 => 
               ReadData2 <= R18;
             when 19 => 
               ReadData2 <= R19;
-			      when 20 => 
+			when 20 => 
               ReadData2 <= R20;
             when 21 => 
               ReadData2 <= R21;
@@ -198,18 +195,17 @@ ARCHITECTURE behavior OF Register_File IS
               ReadData2 <= R26;
             when 27 => 
               ReadData2 <= R27;
-			      when 28 => 
+			when 28 => 
               ReadData2 <= R28;
             when 29 => 
               ReadData2 <= R29;
-			      when 30 => 
+			when 30 => 
               ReadData2 <= R30;
             when 31 => 
               ReadData2 <= R31;
             when others =>
             end case;
       else
-        
       end if; 
     END PROCESS; 
 	 
@@ -233,7 +229,7 @@ ARCHITECTURE behavior OF Register_File IS
               R6 <= WriteData;
             when 7 => 
               R7 <= WriteData;
-			      when 8 => 
+			when 8 => 
               R8 <= WriteData;
             when 9 => 
               R9 <= WriteData;
@@ -253,11 +249,11 @@ ARCHITECTURE behavior OF Register_File IS
               R16 <= WriteData;
             when 17 => 
               R17 <= WriteData;
-			      when 18 => 
+			when 18 => 
               R18 <= WriteData;
             when 19 => 
               R19 <= WriteData;
-			      when 20 => 
+			when 20 => 
               R20 <= WriteData;
             when 21 => 
               R21 <= WriteData;
@@ -273,18 +269,17 @@ ARCHITECTURE behavior OF Register_File IS
               R26 <= WriteData;
             when 27 => 
               R27 <= WriteData;
-			      when 28 => 
+			when 28 => 
               R28 <= WriteData;
             when 29 => 
               R29 <= WriteData;
-			      when 30 => 
+			when 30 => 
               R30 <= WriteData;
             when 31 => 
               R31 <= WriteData;
             when others =>
             end case;
       else
-        
       end if; 
     END PROCESS; 
 	 

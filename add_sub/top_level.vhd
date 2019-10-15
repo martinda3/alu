@@ -1,44 +1,51 @@
 LIBRARY IEEE;
 USE IEEE.STD_LOGIC_1164.ALL;
 
-ENTITY top_level IS
+ENTITY TOP_LEVEL IS
     PORT (
 	CLK      :  IN STD_LOGIC;
-	RegWr    :  IN STD_LOGIC;
-	ALUctr   :  IN STD_LOGIC_VECTOR(2  DOWNTO 0);
-	Rs       :  IN STD_LOGIC_VECTOR(4  DOWNTO 0);
-	Rt       :  IN STD_LOGIC_VECTOR(4  DOWNTO 0);
-	Rd       :  IN STD_LOGIC_VECTOR(4  DOWNTO 0);
-	Result   : OUT STD_LOGIC_VECTOR(31 DOWNTO 0);
-	Zero     : OUT STD_LOGIC;
-	Carryout : OUT STD_LOGIC;
-	Overflow : OUT STD_LOGIC);
-END top_level;
+	REGWR    :  IN STD_LOGIC;
+	ALUCTR   :  IN STD_LOGIC_VECTOR(2  DOWNTO 0);
+	RS       :  IN STD_LOGIC_VECTOR(4  DOWNTO 0);
+	RT       :  IN STD_LOGIC_VECTOR(4  DOWNTO 0);
+	RD       :  IN STD_LOGIC_VECTOR(4  DOWNTO 0);
+	RESULT   : OUT STD_LOGIC_VECTOR(31 DOWNTO 0);
+	ZERO     : OUT STD_LOGIC;
+	CARRYOUT : OUT STD_LOGIC;
+	OVERFLOW : OUT STD_LOGIC);
+END TOP_LEVEL;
 
-ARCHITECTURE simple OF top_level IS
-  constant hold : time := 4 ns;
-  signal DataA : std_logic_vector(31 downto 0);
-  signal DataB : std_logic_vector(31 downto 0);
-  signal Buff  : std_logic_vector(31 downto 0);
-  begin
-  reg : ENTITY work.Register_File(behavior)
-  PORT map(
-       RegWrite  => RegWr,
-       RegS      => Rs,
-       RegT      => Rt,
-       RegD      => Rd,
-       WriteData => Buff,
-       ReadData1 => DataA,
-       ReadData2 => DataB);
+ARCHITECTURE SIMPLE OF TOP_LEVEL IS
+
+  CONSTANT HOLD : TIME := 4 NS;
   
-  alu : ENTITY work.ALU(STRUCTURAL)
-  PORT map(
-       ALUOP  => ALUctr,
-	     DATA1  => DataA,
-	     DATA2  => DataB,
-	     RESULT => Buff,
-	     ZERO   => Zero,
-	     CARRY  => Carryout,
-	     OVER   => Overflow);
-	Result <= Buff when Buff'stable(hold);
-end simple;
+  SIGNAL DATAA : STD_LOGIC_VECTOR(31 DOWNTO 0);
+  SIGNAL DATAB : STD_LOGIC_VECTOR(31 DOWNTO 0);
+  SIGNAL BUFF  : STD_LOGIC_VECTOR(31 DOWNTO 0);
+  
+  BEGIN
+  
+  REG : 
+    ENTITY WORK.REGISTER_FILE(BEHAVIOR)
+    PORT MAP(
+       REGWRITE  => REGWR,
+       REGS      => RS,
+       REGT      => RT,
+       REGD      => RD,
+       WRITEDATA => BUFF,
+       READDATA1 => DATAA,
+       READDATA2 => DATAB);
+ --
+  ALU : 
+    ENTITY WORK.ALU(STRUCTURAL)
+    PORT MAP(
+         ALUOP  => ALUCTR,
+	     DATA1  => DATAA,
+	     DATA2  => DATAB,
+	     RESULT => BUFF,
+	     ZERO   => ZERO,
+	     CARRY  => CARRYOUT,
+	     OVER   => OVERFLOW);
+ --
+	RESULT <= BUFF WHEN BUFF'STABLE(HOLD);
+END SIMPLE;

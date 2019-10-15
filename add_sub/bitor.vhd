@@ -1,15 +1,15 @@
 LIBRARY IEEE;
 USE IEEE.STD_LOGIC_1164.ALL;
 
-ENTITY bitor IS
+ENTITY BITOR IS
   PORT(
       A  :   IN  STD_LOGIC := 'U';
       B  :   IN  STD_LOGIC := 'U';
       --
       S  :  OUT  STD_LOGIC := 'U');
-END bitor;
+END BITOR;
 
-ARCHITECTURE BEHAVIOR OF bitor IS
+ARCHITECTURE BEHAVIOR OF BITOR IS
   BEGIN
-  S    <= (A or B);
+  S    <= (A OR B);
 END BEHAVIOR;
