@@ -57,7 +57,7 @@ ARCHITECTURE behavior OF Register_File IS
         BEGIN
             WHILE 1 = 1 LOOP
                 CLK <= NOT CLK; 
-	        WAIT FOR 1 NS;
+	        WAIT FOR 0.5 NS;
             END LOOP;
         END PROCESS CLOCK;
 
@@ -211,7 +211,7 @@ ARCHITECTURE behavior OF Register_File IS
 	 
 	 PROCESS(CLK)
       BEGIN
-        if (RegWrite = '1') AND (CLK = '0') Then
+        if (RegWrite = '1') AND (CLK = '0' and CLK'event) Then
           case to_integer(unsigned(RegD)) is
             when 0 => 
               R0 <= WriteData;

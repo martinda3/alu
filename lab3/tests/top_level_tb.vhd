@@ -7,7 +7,7 @@ end entity;
 
 architecture behavior of top_level_tb is
   constant TIME_DELAY : time := 10 ns;
-  constant NUM_VALS : integer := 8;
+  constant NUM_VALS : integer := 20;
 
   type RegWr_array is array   (0 to (NUM_VALS - 1)) of std_logic;
   type Rd_array is array      (0 to (NUM_VALS - 1)) of std_logic_vector(4 downto 0);
@@ -20,14 +20,14 @@ architecture behavior of top_level_tb is
   type Result_array is array  (0 to (NUM_VALS - 1)) of std_logic_vector(31 downto 0);
 
   -- Expected input and output data.
-  constant RegWr_vals : RegWr_array := ('0','1','0','1','0','1','0','1');
-  constant Rd_vals : Rd_array := ("00011","00011","00011","00011","00011","00011","00111","00111");
-  constant Rs_vals : Rs_array := ("00001","00001","00001","00001","00001","00001","00111","00111");
-  constant Rt_vals : Rt_array := ("00010","00010","00010","00010","00010","00010","00111","00111");
-  constant ALUctr_vals : ALUctr_array := ("011", "011","000", "000","001", "001","000", "000");
-  constant Zero_vals : Zero_array := ('0','0','0','0','0','0','1','1');
-  constant Overflow_vals : Overflow_array := ('0','0','0','0','0','0','0','0');
-  constant Carryout_vals : Carryout_array := ('0','0','0','0','0','0','0','0');
+  constant RegWr_vals : RegWr_array := ('0','1','0','1','0','1','0','1','0','1','0','1','0','1','0','1','0','1','0','1');
+  constant Rd_vals : Rd_array := ("00011","00011","00011","00011","00011","00011","00111","00111","00100","00100","00101","00101","00110","00110","00111","00111","01000","01000","01001","01001");
+  constant Rs_vals : Rs_array := ("00001","00001","00001","00001","00001","00001","00111","00111","00010","00010","00011","00011","00101","00101","00110","00110","00011","00011","01000","01000");
+  constant Rt_vals : Rt_array := ("00010","00010","00010","00010","00010","00010","00111","00111","00011","00011","00100","00100","00101","00101","00101","00101","00101","00101","00101","00101");
+  constant ALUctr_vals : ALUctr_array := ("011", "011","000", "000","001", "001","000","000","010","010","000","000","100","100","110","110","111","111","101","101");
+  constant Zero_vals : Zero_array := ('0','0','0','0','0','0','1','1','1','1','0','0','0','0','0','0','0','0','0','0');
+  constant Overflow_vals : Overflow_array := ('0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0');
+  constant Carryout_vals : Carryout_array := ('0','0','0','0','0','0','0','0','0','0','1','1','1','1','1','1','1','1','1','1');
   constant Result_vals : Result_array := ("00000000000000000000000000000011",
                                           "00000000000000000000000000000011",
                                           "00000000000000000000000000000011",
@@ -35,9 +35,21 @@ architecture behavior of top_level_tb is
                                           "11111111111111111111111111111111",
                                           "11111111111111111111111111111111",
                                           "00000000000000000000000000000000",
-                                          "00000000000000000000000000000000");
+                                          "00000000000000000000000000000000",
+                                          "00000000000000000000000000000010",
+                                          "00000000000000000000000000000010",
+                                          "00000000000000000000000000000001",
+                                          "00000000000000000000000000000001",
+                                          "00000000000000000000000000000010",
+                                          "00000000000000000000000000000010",
+                                          "00000000000000000000000000000100",
+                                          "00000000000000000000000000000100",
+                                          "11111111111111111111111111111111",
+                                          "11111111111111111111111111111111",
+                                          "01111111111111111111111111111111",
+                                          "01111111111111111111111111111111");
 
-  signal clk_sig : std_logic := '0';
+  --signal clk_sig : std_logic := '0';
   signal RegWr_sig : std_logic;
   signal Rd_sig : std_logic_vector(4 downto 0);
   signal Rs_sig : std_logic_vector(4 downto 0);
@@ -46,12 +58,12 @@ architecture behavior of top_level_tb is
   signal Zero_sig : std_logic;
   signal Overflow_sig : std_logic;
   signal Carryout_sig : std_logic;
-  signal Result_sig : std_logic_vector(31 downto 0);
+  signal Result_sig : std_logic_vector(31 downto 0):= "00000000000000000000000000000000";
 
 begin
 
   DUT : entity work.top_level(simple)
-    port map(clk => clk_sig,
+    port map(--clk => clk_sig,
              RegWr => RegWr_sig,
              Rd => Rd_sig,
              Rs => Rs_sig,
@@ -62,14 +74,6 @@ begin
              Carryout => Carryout_sig,
              Result => Result_sig);
 
-  clock : process
-  begin
-    for i in 0 to 2 * (NUM_VALS) loop
-      clk_sig <= NOT clk_sig;
-      wait for TIME_DELAY/2;
-    end loop;
-    wait;
-  end process clock;
 
   stimulus : process
   begin
